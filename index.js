@@ -96,7 +96,7 @@ function sensorPredict(typz, data) {
   var updatez = {
   };
   update[param] = val;
-  firebase.database().ref().update(updatez);
+  database.ref().update(updatez);
 }
 
 server.listen((process.env.PORT || 8000), function () {
