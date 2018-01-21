@@ -55,7 +55,7 @@ function sensorAverage(rez, paramz) {
     var sensorData = snapshot.val();
     sensorPredict(paramz["sensor"], sensorData);
     for (var entry in sensorData) {
-      if(sensorData[entry][paramz["sensor"]] != null and sensorData[entry][paramz["sensor"]] != undefined) {
+      if(sensorData[entry][paramz["sensor"]] != null && sensorData[entry][paramz["sensor"]] != undefined) {
         average += sensorData[entry][paramz["sensor"]];
         numEntries += 1;
       }
@@ -73,7 +73,7 @@ function sensorCurrent(rez, paramz) {
     var sensorData = snapshot.val();
     sensorPredict(paramz["sensor"], sensorData);
     for (var entry in sensorData) {
-      if (sensorData[entry][paramz["sensor"]] != null and sensorData[entry][paramz["sensor"]] != undefined) {
+      if (sensorData[entry][paramz["sensor"]] != null && sensorData[entry][paramz["sensor"]] != undefined) {
         num = sensorData[entry][paramz["sensor"]];
       }
       break;
@@ -91,7 +91,7 @@ function peopleCount(rez) {
       var sensorData = snapshot.val();
 //      sensorPredict("target", sensorData);
       for (var entry in sensorData) {
-        if(sensorData[entry]["target"] != null and sensorData[entry]["target"] != undefined) {
+        if(sensorData[entry]["target"] != null && sensorData[entry]["target"] != undefined) {
           num += sensorData[entry]["target"];
           count += 1;
         }
