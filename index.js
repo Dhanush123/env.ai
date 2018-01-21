@@ -92,9 +92,9 @@ function sensorPredict(typz, data) {
     array.push(data[entry][typz]);
   }
   var val = stats.mean(array) + stats.stdev(array);
-  database.ref("predict").update({
-    typz : val 
-  });
+  var obj = {};
+  obj[typz] = val.toFixed(2);
+  database.ref("predict").update(obj);
 //  var param = "/predict/"+typz;
 //  var updatez = {
 //  };
