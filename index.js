@@ -54,6 +54,8 @@ function sensorAverage(rez, paramz) {
     var sensorData = snapshot.val();
     console.log("sensorData",sensorData);
     for (var entry in sensorData) {
+      console.log(entry);
+      console.log(entry[paramz["sensor"]]);
       average += entry[paramz["sensor"]];
       numEntries += 1;
     }
