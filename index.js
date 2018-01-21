@@ -48,7 +48,7 @@ server.post("/", function (req, res) {
 var functions = {sensorAverage,sensorCurrent,sensorTrend};
 
 function sensorAverage(rez, paramz) {
-  database.ref('/sensor').once('value').then(function(snapshot) {
+  database.ref('/sensors').once('value').then(function(snapshot) {
     var average = 0;
     var numEntries = 0;
     var sensorData = snapshot.val();
