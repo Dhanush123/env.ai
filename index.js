@@ -52,24 +52,29 @@ function sensorAverage(rez, paramz) {
     var average = 0;
     var numEntries = 0;
     var sensorData = snapshot.val();
-    console.log("sensorData",sensorData);
     for (var entry in sensorData) {
-      console.log(entry);
-      console.log(sensorData[entry][paramz["sensor"]]);
       average += sensorData[entry][paramz["sensor"]];
       numEntries += 1;
     }
     average = average/numEntries;
     return rez.json({
-      "speech": "The average "+paramz["sensor"]+" is "+average.toFixed(2)
+      "speech": "The average "+paramz["sensor"]+" is "+average.toFixed(2)+" degrees"
     }); 
   });
 }
 
 function sensorCurrent(rez, paramz) {
-  return rez.json({
-    "speech": JSON.stringify(paramz)
-  });  
+  database.ref('/sensors').once('value').then(function(snapshot) {
+    var num = 0;
+    var sensorData = snapshot.val();
+    for (var entry in sensorData) {
+      num = sensorData[entry][paramz["sensor"]];
+      break;
+    }
+    return rez.json({
+      "speech": "The current "+paramz["sensor"]+" is "+num.toFixed(2)+" degrees"
+    }); 
+  });
 }
 
 function sensorTrend(rez, paramz) {
