@@ -91,7 +91,8 @@ function sensorPredict(typz, data) {
   for (var entry in data) {
     array.push(data[entry][typz]);
   }
-  var val = stats.mean(array) + stats.stdev(array);
+  var flip = Math.floor(Math.random() * 2);
+  var val = flip == 1 ? stats.mean(array) + stats.stdev(array) : stats.mean(array) - stats.stdev(array);
   var obj = {};
   obj[typz] = parseFloat(val.toFixed(2));
   database.ref("predict").update(obj);
