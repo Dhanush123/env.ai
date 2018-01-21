@@ -11,6 +11,7 @@ server.post("/", function (req, res) {
   console.log("webhook request");
   try {
     if (req.body) {
+        console.log("req.body -->",req.body);
         if (req.body.result && Object.keys(req.body.result.parameters).length == 0) {
           functions[req.body.result.action](res);
         }
@@ -31,7 +32,7 @@ server.post("/", function (req, res) {
   }
 });
 
-var functions = [sensorAverage,sensorCurrent,sensorTrend];
+var functions = {sensorAverage,sensorCurrent,sensorTrend};
 
 function sensorAverage(rez, paramz) {
   return rez.json({
