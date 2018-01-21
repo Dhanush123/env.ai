@@ -36,19 +36,19 @@ var functions = {sensorAverage,sensorCurrent,sensorTrend};
 
 function sensorAverage(rez, paramz) {
   return rez.json({
-    "speech": paramz
+    "speech": JSON.stringify(paramz)
   });
 }
 
 function sensorCurrent(rez, paramz) {
   return rez.json({
-    "speech": paramz
+    "speech": JSON.stringify(paramz)
   });  
 }
 
 function sensorTrend(rez, paramz) {
   return rez.json({
-    "speech": paramz
+    "speech": JSON.stringify(paramz)
   });  
 }
 
