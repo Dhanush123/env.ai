@@ -92,11 +92,14 @@ function sensorPredict(typz, data) {
     array.push(data[entry][typz]);
   }
   var val = stats.mean(array) + stats.stdev(array);
-  var param = "/predict/"+typz;
-  var updatez = {
-  };
-  update[param] = val;
-  database.ref().update(updatez);
+  database.ref("predict").update({
+    typz : val 
+  });
+//  var param = "/predict/"+typz;
+//  var updatez = {
+//  };
+//  update[param] = val;
+//  database.ref().update(updatez);
 }
 
 server.listen((process.env.PORT || 8000), function () {
