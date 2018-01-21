@@ -18,13 +18,13 @@ var config = {
 };
 
 // Get a reference to the database service
-var database;
+var database = firebase.database();
 
 server.post("/", function (req, res) {
   console.log("webhook request");
   try {
     if (req.body) {
-        console.log("req.body -->",req.body);
+//        console.log("req.body -->",req.body);
         if (req.body.result && Object.keys(req.body.result.parameters).length == 0) {
           functions[req.body.result.action](res);
         }
@@ -79,5 +79,4 @@ function sensorTrend(rez, paramz) {
 server.listen((process.env.PORT || 8000), function () {
   console.log("chatbot server is up!!!!!!!!!!!!!!!!!!!!");
   firebase.initializeApp(config);
-  database = firebase.database();
 });
