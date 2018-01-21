@@ -55,8 +55,8 @@ function sensorAverage(rez, paramz) {
     console.log("sensorData",sensorData);
     for (var entry in sensorData) {
       console.log(entry);
-      console.log(sensorData[entry[paramz["sensor"]]]);
-      average += sensorData[entry[paramz["sensor"]]];
+      console.log(sensorData[entry][paramz["sensor"]]);
+      average += sensorData[entry][paramz["sensor"]];
       numEntries += 1;
     }
     average = average/numEntries;
