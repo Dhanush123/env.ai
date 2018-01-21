@@ -46,7 +46,7 @@ server.post("/", function (req, res) {
   }
 });
 
-var functions = {sensorAverage,sensorCurrent,sensorTrend};
+var functions = {sensorAverage,sensorCurrent,peopleCount};
 
 function sensorAverage(rez, paramz) {
   database.ref('/sensors').once('value').then(function(snapshot) {
@@ -55,8 +55,10 @@ function sensorAverage(rez, paramz) {
     var sensorData = snapshot.val();
     sensorPredict(paramz["sensor"], sensorData);
     for (var entry in sensorData) {
-      average += sensorData[entry][paramz["sensor"]];
-      numEntries += 1;
+      if(sensorData[entry][paramz["sensor"]] != null and sensorData[entry][paramz["sensor"]] != undefined) {
+        average += sensorData[entry][paramz["sensor"]];
+        numEntries += 1;
+      }
     }
     average = average/numEntries;
     return rez.json({
@@ -71,7 +73,9 @@ function sensorCurrent(rez, paramz) {
     var sensorData = snapshot.val();
     sensorPredict(paramz["sensor"], sensorData);
     for (var entry in sensorData) {
-      num = sensorData[entry][paramz["sensor"]];
+      if (sensorData[entry][paramz["sensor"]] != null and sensorData[entry][paramz["sensor"]] != undefined) {
+        num = sensorData[entry][paramz["sensor"]];
+      }
       break;
     }
     return rez.json({
@@ -80,10 +84,23 @@ function sensorCurrent(rez, paramz) {
   });
 }
 
-function sensorTrend(rez, paramz) {
-  return rez.json({
-    "speech": JSON.stringify(paramz)
-  });  
+function peopleCount(rez) {
+  database.ref('/sensors').once('value').then(function(snapshot) {
+      var num = 0;
+      var count = 0;
+      var sensorData = snapshot.val();
+//      sensorPredict("target", sensorData);
+      for (var entry in sensorData) {
+        if(sensorData[entry]["target"] != null and sensorData[entry]["target"] != undefined) {
+          num += sensorData[entry]["target"];
+          count += 1;
+        }
+      }
+      num = Math.round(num/count);
+      return rez.json({
+        "speech": "The latest number of people is "+num
+      }); 
+    });  
 }
 
 function sensorPredict(typz, data) {
@@ -96,11 +113,6 @@ function sensorPredict(typz, data) {
   var obj = {};
   obj[typz] = parseFloat(val.toFixed(2));
   database.ref("predict").update(obj);
-//  var param = "/predict/"+typz;
-//  var updatez = {
-//  };
-//  update[param] = val;
-//  database.ref().update(updatez);
 }
 
 server.listen((process.env.PORT || 8000), function () {
