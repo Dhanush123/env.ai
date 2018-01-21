@@ -11,11 +11,11 @@ server.post("/", function (req, res) {
   console.log("webhook request");
   try {
     if (req.body) {
-        if (requestBody.result && Object.keys(requestBody.result.parameters).length == 0) {
-          actions[requestBody.result.action](res);
+        if (req.body.result && Object.keys(req.body.result.parameters).length == 0) {
+          actions[req.body.result.action](res);
         }
       else {
-        actions[requestBody.result.action](res, requestBody.result.parameters);
+        actions[req.body.result.action](res, req.body.result.parameters);
       }
     }
   }
