@@ -7,7 +7,7 @@ const request = require("request");
 const server = express();
 server.use(bodyParser.json());
 
-server.post("/chat", function (req, res) {
+server.post("/", function (req, res) {
   console.log("webhook request");
   try {
     if (req.body) {
