@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const request = require("request");
 const firebase = require("firebase");
+const stats = require("stats-lite");
 
 const server = express();
 server.use(bodyParser.json());
@@ -52,6 +53,7 @@ function sensorAverage(rez, paramz) {
     var average = 0;
     var numEntries = 0;
     var sensorData = snapshot.val();
+    sensorPredict(paramz["sensor"], sensorData);
     for (var entry in sensorData) {
       average += sensorData[entry][paramz["sensor"]];
       numEntries += 1;
@@ -67,6 +69,7 @@ function sensorCurrent(rez, paramz) {
   database.ref('/sensors').once('value').then(function(snapshot) {
     var num = 0;
     var sensorData = snapshot.val();
+    sensorPredict(paramz["sensor"], sensorData);
     for (var entry in sensorData) {
       num = sensorData[entry][paramz["sensor"]];
       break;
@@ -81,6 +84,19 @@ function sensorTrend(rez, paramz) {
   return rez.json({
     "speech": JSON.stringify(paramz)
   });  
+}
+
+function sensorPredict(typz, data) {
+  var array = [];
+  for (var entry in data) {
+    array.push(data[entry][typz]);
+  }
+  var val = stats.mean(array) + stats.stdev(array);
+  var param = "/predict/"+typz;
+  var updatez = {
+  };
+  update[param] = val;
+  firebase.database().ref().update(updatez);
 }
 
 server.listen((process.env.PORT || 8000), function () {
