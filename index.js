@@ -61,7 +61,7 @@ function sensorAverage(rez, paramz) {
     }
     average = average/numEntries;
     return rez.json({
-      "speech": "The average "+paramz["sensor"]+" is "+average
+      "speech": "The average "+paramz["sensor"]+" is "+average.toFixed(2)
     }); 
   });
 }
