@@ -12,10 +12,10 @@ server.post("/", function (req, res) {
   try {
     if (req.body) {
         if (req.body.result && Object.keys(req.body.result.parameters).length == 0) {
-          actions[req.body.result.action](res);
+          functions[req.body.result.action](res);
         }
       else {
-        actions[req.body.result.action](res, req.body.result.parameters);
+        functions[req.body.result.action](res, req.body.result.parameters);
       }
     }
   }
