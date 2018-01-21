@@ -18,7 +18,7 @@ var config = {
 };
 
 // Get a reference to the database service
-var database = firebase.database();
+var database;
 
 server.post("/", function (req, res) {
   console.log("webhook request");
@@ -48,7 +48,7 @@ server.post("/", function (req, res) {
 var functions = {sensorAverage,sensorCurrent,sensorTrend};
 
 function sensorAverage(rez, paramz) {
-  firebase.database().ref('/sensor').once('value').then(function(snapshot) {
+  database.ref('/sensor').once('value').then(function(snapshot) {
     var average = 0;
     var numEntries = 0;
     var sensorData = snapshot.val();
@@ -79,4 +79,5 @@ function sensorTrend(rez, paramz) {
 server.listen((process.env.PORT || 8000), function () {
   console.log("chatbot server is up!!!!!!!!!!!!!!!!!!!!");
   firebase.initializeApp(config);
+  database = firebase.database();
 });
